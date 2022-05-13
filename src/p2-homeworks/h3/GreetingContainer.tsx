@@ -3,8 +3,10 @@ import Greeting from './Greeting'
 
 type GreetingContainerPropsType = {
     users: any // need to fix any
-    addUserCallback: any // need to fix any
+    addUserCallback: (name: string) => void
 }
+
+
 
 // более простой и понятный для новичков
 // function GreetingContainer(props: GreetingPropsType) {
