@@ -1,25 +1,23 @@
-import React from 'react'
+import React, {ChangeEvent, KeyboardEvent} from 'react'
 import s from './Greeting.module.css'
+import SuperInputText from "../h4/common/c1-SuperInputText/SuperInputText";
+import SuperButton from "../h4/common/c2-SuperButton/SuperButton";
 
 export type GreetingPropsType = {
     name: string
-    setNameCallback: (e: any) => void
+    setNameCallback: (e: ChangeEvent<HTMLInputElement>) => void
     addUser: () => void
     error: string
     totalUsers: number
+    onKeyUpHandler: (event: KeyboardEvent<HTMLInputElement>) => void
 }
 
-// презентационная компонента (для верстальщика)
-const Greeting: React.FC<GreetingPropsType> = (
-    {name, setNameCallback, addUser, error, totalUsers} // деструктуризация пропсов
-) => {
-    const inputClass = s.error // need to fix with (?:)
+const Greeting: React.FC<GreetingPropsType> = ({name, setNameCallback, addUser, error, totalUsers, onKeyUpHandler}) => {
 
     return (
         <div>
-            <input value={name} onChange={setNameCallback} className={inputClass}/>
-            <span>{error}</span>
-            <button onClick={addUser}>add</button>
+            <SuperInputText error={error} onChange={setNameCallback} onKeyUp={onKeyUpHandler} value={name}/>
+            <SuperButton onClick={addUser}>Add</SuperButton>
             <span>{totalUsers}</span>
         </div>
     )

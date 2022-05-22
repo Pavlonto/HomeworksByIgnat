@@ -1,5 +1,5 @@
-import React, {ChangeEvent, useState} from 'react'
-import Greeting, {GreetingPropsType} from './Greeting'
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react'
+import Greeting from './Greeting'
 import {UserType} from "./HW3";
 
 type GreetingContainerPropsType = {
@@ -7,25 +7,32 @@ type GreetingContainerPropsType = {
     addUserCallback: (name: string) => void
 }
 
-
-
-// более простой и понятный для новичков
-// function GreetingContainer(props: GreetingPropsType) {
-
-// более современный и удобный для про :)
-// уровень локальной логики
-const GreetingContainer: React.FC<GreetingContainerPropsType> = ({users, addUserCallback}) => { // деструктуризация пропсов
-    const [name, setName] = useState<any>('') // need to fix any
-    const [error, setError] = useState<any>('') // need to fix any
+const GreetingContainer: React.FC<GreetingContainerPropsType> = ({users, addUserCallback}) => {
+    const [name, setName] = useState<string | ''>('')
+    const [error, setError] = useState<string | ''>('')
 
 
     const setNameCallback = (e: ChangeEvent<HTMLInputElement>) => {
+        setError('')
         setName(e.currentTarget.value)
     }
+
+    const onKeyUpHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter" && name.trim() !== "") {
+            addUserCallback(name)
+            setName("")
+            alert(`Hello ${name}!`)
+        }
+    }
+
     const addUser = () => {
-        addUserCallback(name)
-        setName("")
-        alert(`Hello` + ` ` + name + `!`)
+        if (name.trim() !== "") {
+            addUserCallback(name)
+            setName("")
+            alert(`Hello ${name}!`)
+        } else {
+            setError('Title is required')
+        }
     }
 
     const totalUsers = users.length
@@ -37,6 +44,7 @@ const GreetingContainer: React.FC<GreetingContainerPropsType> = ({users, addUser
             addUser={addUser}
             error={error}
             totalUsers={totalUsers}
+            onKeyUpHandler={onKeyUpHandler}
         />
     )
 }
