@@ -1,7 +1,6 @@
 import React from 'react'
 import {AffairType} from "./HW2";
 import SuperButton from "../h4/common/c2-SuperButton/SuperButton";
-import SuperCheckbox from "../h4/common/c3-SuperCheckbox/SuperCheckbox";
 
 type AffairPropsType = {
     affair: AffairType
